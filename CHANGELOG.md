@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-16
+
 ### Added
+
+First release. Every resource and data source passed its acceptance test against
+api.mux.com on 2026-11-16.
 
 - Provider configuration with a Mux access token (`token_id`, `token_secret`, or
   `MUX_TOKEN_ID` and `MUX_TOKEN_SECRET`), one provider alias per environment.
