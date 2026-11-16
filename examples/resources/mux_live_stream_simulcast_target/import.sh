@@ -1,0 +1,2 @@
+# Import by <live_stream_id>/<simulcast_target_id>.
+terraform import mux_live_stream_simulcast_target.restream ZEBrNTpHC02iUah025KM3te6ylM7W4S4silsrFtUkn3Ag/vuOfW021mz5QA500wYEQ9SeUYvuYnpFz011mqSvski5T8claN02JN9ve2g

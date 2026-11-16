@@ -1,0 +1,57 @@
+---
+page_title: "Provider: Mux"
+description: |-
+  Manage the configuration of a Mux environment: playback restrictions, signing keys, webhooks and live streams.
+---
+
+# Mux Provider
+
+An unofficial, community-maintained provider for [Mux](https://www.mux.com), built on the
+[Mux API](https://www.mux.com/docs/api-reference). It manages the configuration of a Mux environment:
+playback restrictions, signing keys, webhooks, live streams with their playback IDs and simulcast
+targets, and transcription vocabularies. It supports both OpenTofu and Terraform.
+
+Use the full `registry.opentofu.org/solcreek/mux` source address with either CLI.
+
+## Example Usage
+
+{{ tffile "examples/provider/provider.tf" }}
+
+## Authentication
+
+Create an [access token](https://dashboard.mux.com/settings/access-tokens) in the environment to
+manage and pass its ID and secret through the `MUX_TOKEN_ID` and `MUX_TOKEN_SECRET` environment
+variables, or the `token_id` and `token_secret` arguments. The two are one credential: the provider
+takes both from the configuration or both from the environment, never one of each.
+
+A token belongs to one environment. To manage several, such as production and development, configure
+one provider alias per environment, each with its own token. `data.mux_environment` reports which
+environment a token belongs to.
+
+| To manage | Token permissions |
+|-----------|-------------------|
+| `mux_playback_restriction`, `mux_live_stream` and its playback IDs and simulcast targets, `mux_transcription_vocabulary` | Mux Video: read and write |
+| `mux_signing_key`, `mux_webhook` | System: read and write |
+| data sources only | read |
+
+A `401` is reported as a wrong or revoked token; a `403` as a missing permission.
+
+## Lifecycle behavior
+
+- A playback restriction is always changed in place and keeps its ID, which signed playback tokens
+  name. Mux takes a few minutes to enforce a changed list of domains.
+- `mux_playback_restriction`, `mux_signing_key` and `mux_live_stream` default to
+  `deletion_protection = true`: deleting them breaks whatever uses their ID, key or stream key, and
+  a new object gets new ones. Apply `false` before destroying or replacing one.
+- Existing objects are adopted with `terraform import`, never by matching a name or an address.
+  Mux does not return the private key of an existing signing key or the signing secret of an
+  existing webhook, so those stay empty after an import.
+- Secrets (`mux_signing_key.private_key`, `mux_webhook.signing_secret`, `mux_live_stream.stream_key`
+  and `srt_passphrase`, a simulcast target's `stream_key`) are marked sensitive but are stored in the
+  state, like every attribute. Protect the state accordingly.
+- A live stream's `audio_only`, `test` and `new_asset_settings.playback_policies` cannot change
+  after creation; changing one replaces the live stream.
+- Playback IDs and simulcast targets have no update: changing one replaces it. Mux only adds or
+  removes a simulcast target while the live stream is idle.
+
+{{ .SchemaMarkdown | trimspace }}

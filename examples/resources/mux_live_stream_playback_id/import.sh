@@ -1,0 +1,2 @@
+# Import by <live_stream_id>/<playback_id>.
+terraform import mux_live_stream_playback_id.public ZEBrNTpHC02iUah025KM3te6ylM7W4S4silsrFtUkn3Ag/HNRDuwff3K2VjTZZAPuvd2Kx6D01XUQFv02GFBHPUka018
