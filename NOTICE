@@ -1,0 +1,14 @@
+Terraform / OpenTofu Provider for Mux
+Source: https://github.com/solcreek/terraform-provider-mux
+Original source is licensed under Mozilla Public License 2.0.
+
+This is an independent community project. It is not affiliated with, endorsed
+by, or supported by Mux, Inc. "Mux" is a trademark of its respective owner and
+is used here only to describe what the provider works with.
+
+The provider uses the Terraform Plugin Framework (MPL-2.0) and a
+standard-library-only Mux API client written against Mux's published API
+reference. Dependencies retain their own licenses and copyright notices.
+Release archives include dependency licenses, notices, and source where
+required under third_party/. Dependency versions are recorded in go.mod and
+go.sum at the corresponding release tag.

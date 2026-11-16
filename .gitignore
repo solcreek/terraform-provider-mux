@@ -1,0 +1,16 @@
+/terraform-provider-mux
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+*.tfvars.json
+.terraform/
+.terraform.lock.hcl
+crash.log
+*.test
+/bin/
+/dist/
+/third_party/
+/coverage.out
+.env
+.env.*
